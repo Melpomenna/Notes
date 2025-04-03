@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Общее/Полезные статьи и ссылки.md",
+                "file": "Дневные заметки/2025-04-03.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Полезные статьи и ссылки"
+              "title": "2025-04-03"
             }
           }
         ],
@@ -127,6 +127,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Дневные заметки/2025-04-03.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -136,7 +137,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Обратные ссылки"
+              "title": "Обратные ссылки для 2025-04-03"
             }
           },
           {
@@ -145,11 +146,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Дневные заметки/2025-04-03.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Исходящие ссылки"
+              "title": "Исходящие ссылки из 2025-04-03"
             }
           },
           {
@@ -173,12 +175,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "Дневные заметки/2025-04-03.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Структура"
+              "title": "Структура 2025-04-03"
             }
           }
         ]
@@ -198,14 +201,20 @@
       "command-palette:Открыть палитру команд": false
     }
   },
-  "active": "69a7437d58978aa7",
+  "active": "c03832d53b0b5822",
   "lastOpenFiles": [
+    "Mellpomenna/IPR.md",
+    "Дневные заметки/2025-04-03.md",
+    "Дневные заметки",
+    "Общее/Книги.md",
+    "C++/База Знаний.md",
+    "Windows/База знаний.md",
     "Общее/Полезные статьи и ссылки.md",
     "C++/Полезные статьи и ссылки.md",
+    "Windows/Полезные статьи и ссылки.md",
+    "Windows",
     "C++/Вопросы с собесов и их решения.md",
-    "C++/База Знаний.md",
     "C++/Фишки.md",
-    "Mellpomenna/IPR.md",
     "Общее",
     "Mellpomenna",
     "C++.md",

@@ -27,6 +27,13 @@
         "a": 1,
         "rgb": 975305
       }
+    },
+    {
+      "query": "path:Windows  ",
+      "color": {
+        "a": 1,
+        "rgb": 1714687
+      }
     }
   ],
   "collapse-display": false,
