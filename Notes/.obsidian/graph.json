@@ -1,7 +1,7 @@
 {
   "collapse-filter": false,
   "search": "",
-  "showTags": false,
+  "showTags": true,
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
@@ -34,6 +34,55 @@
         "a": 1,
         "rgb": 1714687
       }
+    },
+    {
+      "query": "path:GPU  ",
+      "color": {
+        "a": 1,
+        "rgb": 5373446
+      }
+    },
+    {
+      "query": "path:GPU/DirectX12  ",
+      "color": {
+        "a": 1,
+        "rgb": 9109421
+      }
+    },
+    {
+      "query": "path:Алгоритмы  ",
+      "color": {
+        "a": 1,
+        "rgb": 16201736
+      }
+    },
+    {
+      "query": "tag:#Intel  ",
+      "color": {
+        "a": 1,
+        "rgb": 2661104
+      }
+    },
+    {
+      "query": "tag:#AMD  ",
+      "color": {
+        "a": 1,
+        "rgb": 12656415
+      }
+    },
+    {
+      "query": "tag:#CPU  ",
+      "color": {
+        "a": 1,
+        "rgb": 16198583
+      }
+    },
+    {
+      "query": "tag:#Nvidia  ",
+      "color": {
+        "a": 1,
+        "rgb": 3244587
+      }
     }
   ],
   "collapse-display": false,
@@ -46,6 +95,6 @@
   "repelStrength": 15.7291666666667,
   "linkStrength": 1,
   "linkDistance": 356,
-  "scale": 0.7132754626224435,
+  "scale": 0.5087618855792653,
   "close": false
 }
