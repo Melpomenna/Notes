@@ -83,6 +83,41 @@
         "a": 1,
         "rgb": 3244587
       }
+    },
+    {
+      "query": "tag:Microsoft",
+      "color": {
+        "a": 1,
+        "rgb": 65459
+      }
+    },
+    {
+      "query": "tag:Security",
+      "color": {
+        "a": 1,
+        "rgb": 15991195
+      }
+    },
+    {
+      "query": "tag:#Процессоры  ",
+      "color": {
+        "a": 1,
+        "rgb": 16711744
+      }
+    },
+    {
+      "query": "path:GameDev  ",
+      "color": {
+        "a": 1,
+        "rgb": 16028427
+      }
+    },
+    {
+      "query": "path:Asembler  ",
+      "color": {
+        "a": 1,
+        "rgb": 8847605
+      }
     }
   ],
   "collapse-display": false,
@@ -95,6 +130,6 @@
   "repelStrength": 15.7291666666667,
   "linkStrength": 1,
   "linkDistance": 356,
-  "scale": 0.5087618855792653,
+  "scale": 0.36288736930121873,
   "close": false
 }
