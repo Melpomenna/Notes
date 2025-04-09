@@ -8,7 +8,7 @@
   "collapse-color-groups": false,
   "colorGroups": [
     {
-      "query": "path:C++  ",
+      "query": "path:C++",
       "color": {
         "a": 1,
         "rgb": 15793956
@@ -22,101 +22,108 @@
       }
     },
     {
-      "query": "path:Общее  ",
+      "query": "path:Общее",
       "color": {
         "a": 1,
         "rgb": 975305
       }
     },
     {
-      "query": "path:Windows  ",
+      "query": "path:Windows",
       "color": {
         "a": 1,
         "rgb": 1714687
       }
     },
     {
-      "query": "path:GPU  ",
+      "query": "path:GPU",
       "color": {
         "a": 1,
         "rgb": 5373446
       }
     },
     {
-      "query": "path:GPU/DirectX12  ",
+      "query": "path:GPU/DirectX12",
       "color": {
         "a": 1,
         "rgb": 9109421
       }
     },
     {
-      "query": "path:Алгоритмы  ",
+      "query": "path:Алгоритмы",
       "color": {
         "a": 1,
         "rgb": 16201736
       }
     },
     {
-      "query": "tag:#Intel  ",
+      "query": "tag:I#ntel",
       "color": {
         "a": 1,
         "rgb": 2661104
       }
     },
     {
-      "query": "tag:#AMD  ",
+      "query": "tag:#AMD",
       "color": {
         "a": 1,
         "rgb": 12656415
       }
     },
     {
-      "query": "tag:#CPU  ",
+      "query": "tag:#CPU",
       "color": {
         "a": 1,
         "rgb": 16198583
       }
     },
     {
-      "query": "tag:#Nvidia  ",
+      "query": "tag:#Nvidia",
       "color": {
         "a": 1,
         "rgb": 3244587
       }
     },
     {
-      "query": "tag:Microsoft",
+      "query": "tag:#Microsoft",
       "color": {
         "a": 1,
         "rgb": 65459
       }
     },
     {
-      "query": "tag:Security",
+      "query": "tag:#Security",
       "color": {
         "a": 1,
         "rgb": 15991195
       }
     },
     {
-      "query": "tag:#Процессоры  ",
+      "query": "tag:#Процессоры",
       "color": {
         "a": 1,
         "rgb": 16711744
       }
     },
     {
-      "query": "path:GameDev  ",
+      "query": "path:GameDev",
       "color": {
         "a": 1,
         "rgb": 16028427
       }
     },
     {
-      "query": "path:Asembler  ",
+      "query": "path:Asembler",
       "color": {
         "a": 1,
         "rgb": 8847605
+      }
+    },
+    {
+      "query": "tag:#TODO",
+      "color": {
+        "a": 1,
+        "rgb": 16711680
       }
     }
   ],
@@ -130,6 +137,6 @@
   "repelStrength": 15.7291666666667,
   "linkStrength": 1,
   "linkDistance": 356,
-  "scale": 0.36288736930121873,
+  "scale": 0.50876188557927,
   "close": false
 }
