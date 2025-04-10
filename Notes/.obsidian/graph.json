@@ -125,6 +125,20 @@
         "a": 1,
         "rgb": 16711680
       }
+    },
+    {
+      "query": "tag:#MSVC  ",
+      "color": {
+        "a": 1,
+        "rgb": 49151
+      }
+    },
+    {
+      "query": "path:Компиляторы  ",
+      "color": {
+        "a": 1,
+        "rgb": 16759552
+      }
     }
   ],
   "collapse-display": false,
@@ -137,6 +151,6 @@
   "repelStrength": 15.7291666666667,
   "linkStrength": 1,
   "linkDistance": 356,
-  "scale": 0.50876188557927,
+  "scale": 0.5087618855792727,
   "close": false
 }
