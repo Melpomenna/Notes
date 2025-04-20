@@ -45,7 +45,7 @@ ______
 [16 байт вместо 32: управляем layout'ом в C++](https://habr.com/p/899784/)
 Не плохая статья, рассказывающая основы упаковки данных в структурах, выравнивании, битовых полях, а так же о паддинге
 Из интересно подмеченного:
-1) Проверка размера структуры во время компиляции, а так же офсета полей в constexpr, можно на этом сделат концеп
+1) Проверка размера структуры во время компиляции, а так же офсета полей в constexpr, можно на этом сделать концепт
 2)вывода размера структуры через clang:
 clang++ -Xclang -fdump-record-layouts
 Хотелось бы услышать про cache-friendly, но там этого не было
@@ -59,4 +59,25 @@ ______
 Представлены примеры идеомы RAII не для ресурсов
 А как архитектурный стиль, например для транзакций или отмены асинхронный операций через деструктор
 В целом и то и то ресурсы, но если не думать только в рамках ресурсах, а о задачах, то получается безопасное решение
+______
+
+#MSVC 
+
+Чтобы использовать cl.exe нужно настроить следующие переменные:
+INCLUDE, LIB:
+INCLUDE:
+```
+C:\Program Files (x86)\Microsoft Visual Studio\<версия>\VC\include
+ C:\Program Files (x86)\Windows Kits\10\Include\<версия>\ucrt 
+ C:\Program Files (x86)\Windows Kits\10\Include\<версия>\shared 
+ C:\Program Files (x86)\Windows Kits\10\Include\<версия>\um 
+ C:\Program Files (x86)\Windows Kits\10\Include\<версия>\winrt
+```
+
+LIB:
+```
+C:\Program Files (x86)\Microsoft Visual Studio\<версия>\VC\lib
+C:\Program Files (x86)\Windows Kits\10\Lib\<версия>\ucrt\x64 
+C:\Program Files (x86)\Windows Kits\10\Lib\<версия>\um\x64
+```
 ______
