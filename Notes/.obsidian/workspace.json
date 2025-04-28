@@ -20,91 +20,7 @@
             }
           },
           {
-            "id": "773beb8425c2ca39",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Компиляторы/MSVC/База знаний, MSVC.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "База знаний, MSVC"
-            }
-          },
-          {
-            "id": "bcf2c307ff27c85b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Общее/План прочтения книг.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "План прочтения книг"
-            }
-          },
-          {
-            "id": "46d8f5388cd017a0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "GPU/Новости, GPU.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Новости, GPU"
-            }
-          },
-          {
-            "id": "de07bfd81da79220",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Компиляторы/MSVC/База знаний, MSVC.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "База знаний, MSVC"
-            }
-          },
-          {
-            "id": "9e31e2c5130f0ca0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Компиляторы/База знаний.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "База знаний"
-            }
-          },
-          {
-            "id": "e01abe8306137e31",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "C++/База Знаний, C++.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "База Знаний, C++"
-            }
-          },
-          {
-            "id": "6039ed78f5bf862e",
+            "id": "e693ea0e91cae66f",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -118,21 +34,7 @@
             }
           },
           {
-            "id": "41901eec53188640",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Дневные заметки/2025-04-16.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2025-04-16"
-            }
-          },
-          {
-            "id": "ce6cabf4051ec326",
+            "id": "24b2f18d65ef20c1",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -144,9 +46,23 @@
               "icon": "lucide-file",
               "title": "База Знаний, C++"
             }
+          },
+          {
+            "id": "eb9262576add0ab0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Заметки по книгам/Рецензия на книгу Олимпиадное программирование 2-е издание, Антти Лааксонен.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Рецензия на книгу Олимпиадное программирование 2-е издание, Антти Лааксонен"
+            }
           }
         ],
-        "currentTab": 9
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -178,7 +94,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "todo",
+                "query": "tag:#Cmake",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -293,34 +209,34 @@
       "command-palette:Открыть палитру команд": false
     }
   },
-  "active": "ce6cabf4051ec326",
+  "active": "c03832d53b0b5822",
   "lastOpenFiles": [
-    "Дневные заметки/2025-04-21.md",
-    "Дневные заметки/2025-04-20.md",
-    "Дневные заметки/2025-04-19.md",
-    "GPU/Новости, GPU.md",
-    "C++/Вопросы с собесов и их решения, C++.md",
+    "Дневные заметки/2025-04-28.md",
     "C++/Полезные статьи и ссылки, C++.md",
+    "C++/База Знаний, C++.md",
+    "C++/Вопросы с собесов и их решения, C++.md",
     "C++/Фишки, C++.md",
+    "GPU/Полезные статьи, ссылки, курсы, GPU.md",
+    "GPU/Новости, GPU.md",
+    "GPU/DirectX12/Фишки, DirectX12.md",
+    "Компиляторы/MSVC/База знаний, MSVC.md",
+    "Компиляторы/База знаний.md",
+    "Компиляторы/Полезные статьи, ссылки, курсы, новости.md",
     "GameDev/Полезные статьи, ссылки, курсы, GameDev.md",
     "GameDev/Новости, GameDev.md",
-    "Mellpomenna/IPR.md",
-    "Windows/Новости, Windows.md",
-    "Windows/База знаний, Windows.md",
-    "Windows/Полезные статьи и ссылки, Windows.md",
+    "Дневные заметки/2025-04-27.md",
+    "Дневные заметки/2025-04-26.md",
+    "Дневные заметки/2025-04-25.md",
     "Общее/Полезные статьи, ссылки, курсы, лекции, новости.md",
-    "Общее/План прочтения книг.md",
-    "C++/База Знаний, C++.md",
-    "Дневные заметки/2025-04-18.md",
-    "Дневные заметки/2025-04-17.md",
-    "Компиляторы/Полезные статьи, ссылки, курсы, новости.md",
-    "Общее/Книги.md",
-    "Алгоритмы/Полезная информация.md",
-    "Алгоритмы/Фишки.md",
-    "Компиляторы/База знаний.md",
+    "Дневные заметки/2025-04-24.md",
+    "Дневные заметки/2025-04-23.md",
+    "Заметки по книгам/Рецензия на книгу Олимпиадное программирование 2-е издание, Антти Лааксонен.md",
+    "Дневные заметки/2025-04-22.md",
+    "Дневные заметки/2025-04-21.md",
+    "Дневные заметки/2025-04-20.md",
+    "YouTrack URL.md",
     "Дневные заметки/2025-04-16.md",
-    "Дневные заметки/2025-04-15.md",
-    "GPU/Полезные статьи, ссылки, курсы, GPU.md",
+    "Дневные заметки/2025-04-18.md",
     "Компиляторы/MSVC",
     "Компиляторы",
     "C++/Без названия",

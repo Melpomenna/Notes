@@ -81,3 +81,95 @@ C:\Program Files (x86)\Windows Kits\10\Lib\<версия>\ucrt\x64
 C:\Program Files (x86)\Windows Kits\10\Lib\<версия>\um\x64
 ```
 ______
+
+[Senders/Receivers в C++26: от теории к практике](https://habr.com/p/904134/)
+
+В статье рассказываются о будущей возможности к асинхронному выполнению - это концепция Sender/Receiver
+
+Помогает выстраивать более архитектурно, нежели с использование std::future/std::async std::thread и текущей Concurency Thread Support Library
+
+Выглядит достаточно компактно, есть свои недостатки, так же есть поддержка корутин
+
+Ждем чтобы опробовать
+
+______
+
+[WG21](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/)
+
+Список пропозлов на год и месяц по c++
+______
+
+https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/p3665r0.html
+
+я не знаю как это оценить, но пропозл говорит о вертикально написании текста
+
+______
+#MSVC #Microsoft  #Компиляторы #Алгоритмы 
+
+Microsoft dash board for c++26 features: https://github.com/orgs/microsoft/projects/1143
+
+Microsoft dash board for c++23 features: https://github.com/orgs/microsoft/projects/1142
+
+Microsoft STL official source code: https://github.com/microsoft/STL/
+
+______
+
+## Intel VTune
+
+[Documentation](https://www.intel.com/content/www/us/en/docs/vtune-profiler/cookbook/2023-0/overview.html?language=en?language=en)
+
+Программа для  профилирования кода и просмотра метрик
+
+   
+______
+#CMake
+
+В benchmarks от Google, чтобы не собирались для данной библиотеки тесты нужно установить следующие макросы:
+
+```cmake
+set(BENCHMARK_ENABLE_GTEST_TESTS  OFF CACHE BOOL "Whether to install benchmark")
+set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "Disable tests")
+set(BENCHMARK_INSTALL_DOCS OFF CACHE BOOL "Disable docs")
+```
+
+______
+#CMake
+
+Чтобы clang-tidy работал каждый раз при компиляции можно сделать следующую функцию:
+
+```CMake
+function(UseClangTidy target)
+    find_program(CLANG_TIDY_EXE NAMES "clang-tidy")
+
+    if (NOT CLANG_TIDY_EXE)
+        message(WARNING "no command clang-tidy")
+    else ()
+        message(STATUS "Set clang-tidy for ${target}")
+        set(CLANG_TIDY_COMMAND "${CLANG_TIDY_EXE}" "--config-file=${CMAKE_SOURCE_DIR}/.clang-tidy")
+        set_target_properties(${target} PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_COMMAND}")
+    endif ()
+endfunction()
+```
+
+
+______
+
+#MSVC #Microsoft 
+
+Компания выпустила библиотеку GSL - Guideine Support Library, которая помогает писать более безопасный код.
+
+Вот основные классы/функции, который в ней есть:
+[GitHub](https://github.com/microsoft/GSL)
+[YouTube](https://www.youtube.com/watch?v=eFJd3JNUEIs&t=232s)
+
+gsl::finally - работает на основе RAII, принимает лямбду и вызывает ее в деструкторе
+
+gsl::narrow - вызывает исключение при не корректном преобразовании типов, например преобразование int в char, а значение int больше диапазона char
+
+gsl::not_null - проверяет, что указатель не является null. Обертка на типом. Во время компиляции проверяет, чтобы указатель не был null, во время runtime вызывает ошибку и программа прекращает работать
+
+gsl::owner - синтаксическая аннотация, обертка над указателем - означает что указатель в данном скоупе должен быть освобожден.
+
+gsl::span - обертка над последовательностью, для проверки границ
+
+______
