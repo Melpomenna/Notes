@@ -11,15 +11,14 @@ using _Impl = _Func_impl_no_alloc<decay_t<_Fx>, _Ret, _Types...>;
 Для него выстраиваются правила на аллокацию:
 
 1) 
-   ```cpp
+```cpp
    sizeof(_Impl) <= _Space_size, где _Space_size = (_Small_object_num_ptrs - 1) * sizeof(void*),  а _Small_object_num_ptrs = 6 + 16 / sizeof(void*)
 ```
 
-
 2) 
-   ```cpp
+```cpp
    alignof(_Impl) <= alignof(max_align_t), где max_align_t алиас на double
-   ```
+```
 
 3) функция должна быть noexcept
 

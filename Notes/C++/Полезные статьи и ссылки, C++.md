@@ -173,3 +173,18 @@ gsl::owner - синтаксическая аннотация, обертка н�
 gsl::span - обертка над последовательностью, для проверки границ
 
 ______
+
+#CMake 
+
+ Функция для проверки кода на cppcheck из CMake
+
+```CMake
+function(use_cppcheck target)
+	 find_program(CPPCHECK_COMMAND cppcheck) 
+	 if (CPPCHECK_COMMAND) 
+		 message("CPPCheck founded!\n") 
+		 set_target_properties(${target} PROPERTIES C_CPPCHECK "${CPPCHECK_COMMAND};-q;-j4;--enable=information,performance,portability,warning;--error-exitcode=1;}") 
+	endif() 
+endfunction()
+```
+_____

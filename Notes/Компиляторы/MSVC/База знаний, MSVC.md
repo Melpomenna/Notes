@@ -43,4 +43,10 @@ ______
 
 -fsanitize=address - включить address sanitazer
 
+/SUBSYSTEM - опция линковки, указывающая тип entry point function
+
+/Yu - указывает precompiled header
+
+/FI - принудительно включить файлы
+
 ______
