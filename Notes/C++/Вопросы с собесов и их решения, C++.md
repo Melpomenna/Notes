@@ -11,6 +11,8 @@
 6) Move семантика
    
    Зачастую описанные выше темы это то, что спрашивают на собеседованиях и то, к чему нужно быть готовым, можно встретится со спецификой, но эти вещи знать нужно для более чем спокойного программирования на c++ (исключая базовое понимание синтаксиса)
+   Стоит учесть, что реализация может различаться в зависимости от компилятора.
+   В данном случае приведены реализации в компиляторе MSVC 
    начнем:
 ## RAII
 
@@ -326,3 +328,156 @@ ub не происходит при вызове виртуальных функ
 
 вспоминаем про offset to top:
 используя смещение можем узнать расположение нашего vptr и взять нужную таблицу
+
+## Контейнеры
+
+Здесь будет детальный разбор каждого из следующий контейнеров, более подробную базу о той или иной структуре данных можно найти [[База знаний, Алгоритмы|База знаний, Алгоритмы]]:
+
+	1. std::string
+	2. std::vector
+	3. красно-черное дерево
+		1. std::map
+		2. std::set
+		3. std::multi_set
+		4. std::multi_map
+	4. std::array
+	5. хеш-таблица
+		1. std::unordered_set
+		2. std::unordered_map
+		3. std::multiunordered_set
+		4. std::multiunordered_map
+	6. std::list
+	7. std::dequeue
+	8. std::queue
+	9. std::stack
+
+### std::string
+std::string - alias на basic_string<char, char_traits<char>, allocator<char>>
+в себе хранит 1 поле - _Compressed_pair<_Alty, _Scary_val>, где:
+\_Alty - алиас на \_Rebind_alloc_t<_Alloc, _Elem>
+_Scary_val - алиас на:
+```cpp
+_String_val<conditional_t<_Is_simple_alloc_v<_Alty>, _Simple_types<_Elem>,
+        _String_iter_types<_Elem, typename _Alty_traits::size_type, typename _Alty_traits::difference_type,
+            typename _Alty_traits::pointer, typename _Alty_traits::const_pointer>>>;
+```
+боятся \_String_val не нужно, т.к. он шаблонным аргумент принимает или \_Simple_types, в зависимости от того, есть ли у аллокатора определенные алисы, если нет, то берет те, что в нем переопределены (сравниваем одни  using на соответствие std::is_same с другими)
+Прежде чем говорить о \_Compressed_pair, поговорим для начала о \_String_val:
+***\_String_val***:
+класс который наследуется от \_Container_base, и шаблонным параметром принимает структуру/класс, которая обязана содержать следующие алиасы:
+
+```cpp
+    using value_type      = typename _Val_types::value_type;
+    using size_type       = typename _Val_types::size_type;
+    using difference_type = typename _Val_types::difference_type;
+    using pointer         = typename _Val_types::pointer;
+    using const_pointer   = typename _Val_types::const_pointer;
+```
+
+Про \_Container_base чуть позже, но поговорим, он нам еще понадобится
+
+Данный класс содержит следующие поля:
+```cpp
+    _Bxty _Bx;
+
+    // invariant: _Myres >= _Mysize, and _Myres >= _Small_string_capacity (after string's construction)
+    // neither _Mysize nor _Myres takes account of the extra null terminator
+    size_type _Mysize = 0; // current length of string (size)
+    size_type _Myres  = 0; // current storage reserved for string (capacity)
+```
+
+с размером и capacity все  в целом есть:
+capacity нужен для аллокаций, размер указывает текущее количество элементов в контейнере
+что же такое \_Bxty?
+Это union, который содержит 3 поля:
+Под словом статический означает выделен на стеке
+1) указатель \_Ptr 
+2) статический \_Storage размером _BUF_SIZE
+3) статический \_Alias размером \_BUF_SIZE, нужен для обеспечения бинарной совместимости (особенно /clr)
+   \_BUF_SIZE рассчитывается следующим образом:
+   
+```cpp
+
+_BUF_SIZE = 16 / sizeof(value_type) < 1 ? 1 : 16 / sizeof(value_type);
+
+```
+   
+В случае с value_type char, \_BUF_SIZE будет равен 16
+
+Если capacity буффера меньше или равен:
+\_Small_string_capacity:
+```cpp
+_Small_string_capacity = _BUF_SIZE - 1
+```
+то используется \_Storage, в другом случае \_Ptr
+
+За счёт такого метода можно поддержать SSO - small string optimization, т.к. теперь нам не нужны аллокации и все данные находятся на стеке
+
+Поговорим теперь о том, что такое  \_Container_base
+В зависимости от  значения:
+```cpp
+_ITERATOR_DEBUG_LEVEL
+```
+это алиас или:
+если данный макрос равен 0:
+\_Container_base0
+в другом случае:
+\_Container_base12
+
+\_Container_base0 достаточно простая структура, имеющая следующую реализацию:
+```
+struct _Container_base0 {
+    _CONSTEXPR20 void _Orphan_all() noexcept {}
+    _CONSTEXPR20 void _Swap_proxy_and_iterators(_Container_base0&) noexcept {}
+    _CONSTEXPR20 void _Alloc_proxy(const _Fake_allocator&) noexcept {}
+    _CONSTEXPR20 void _Reload_proxy(const _Fake_allocator&, const _Fake_allocator&) noexcept {}
+};
+```
+
+с \_Container_base12 все чуть сложнее:
+Он содержит указатель на \_Container_proxy, с  названием \_Myproxy
+сама прокся это тоже достаточнно простой класс:
+```cpp
+struct _Container_proxy { // store head of iterator chain and back pointer
+    _CONSTEXPR20 _Container_proxy() noexcept = default;
+    _CONSTEXPR20 _Container_proxy(_Container_base12* _Mycont_) noexcept : _Mycont(_Mycont_) {}
+
+    const _Container_base12* _Mycont       = nullptr;
+    mutable _Iterator_base12* _Myfirstiter = nullptr;
+};
+
+```
+
+Теперь поговорим о функциональности \_Container_base12:
+
+***\_Orphan_all:***
+В зависимости от того, поддержана ли contant_evaluated (c++20):
+функция is_constant_evaluated
+будет вызван или:
+\_Orphan_all_unlocked_v3 или \_Orphan_all_locked_v3, значение  \_ITERATOR_DEBUG_LEVEL должно быть равно 2, в целом разница 1 от другого в том, что  \_Orphan_all_locked_v3 создает объект \_Lockit с дебаг уровнем 3
+Данные методы делают следующее:
+проходятся по итераторам в прокси объекте и зануляют их, саму проксю тоже
+Зачем это? Чуть позже
+
+
+***\_Swap_proxy_and_iterators:***
+В поведение метода аналогично с \_Orphan_all, сама логика другая:
+меняет свой прокси объект, на прокси другого
+
+***\_Alloc_proxy:***
+Создает новый прокси объект используя аллоктор, \_Mycont указывает всегда на this объект
+
+***\_Reload_proxy:***
+Создает новый прокси объект используя новый аллокатор, аналогично с \_Alloc_proxy, но очищает старый прокси объект
+
+теперь про \_Iterator_base12, фактически это односвязный список из набора итераторов и прокси объектов, поэтому \_Container_base_12 содержит root ноду данного списка
+Ну чтож, мы столько разобрали, но к самой реализации std::string еще не подошли, а нам осталось разобрать класс обертку \_Compressed_pair, после чего можно перейти к реализации std::string
+
+***\_Compressed_pair*** - шаблонный класс который принимает 3 аргумента, тип T1, T2 и bool
+Формально очень похоже на std::pair, но, если T1 пустой класс/структура и не final, тогда класс наследуется приватно от T1 и полем содержит T2, в другом случае:
+если T1 не пуст или final, то содержит 2 поля с типами T1 и T2
+
+Ну чтож, наконец-то можно перейти к самому классу basic_string
+мы рассмотрим следующие возможности:
+конструкторы, операторы, деструктор, вставка, удаление, поиск:
+Конструкторы

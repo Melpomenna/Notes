@@ -160,6 +160,13 @@
         "a": 1,
         "rgb": 16774912
       }
+    },
+    {
+      "query": "tag:#ARM  ",
+      "color": {
+        "a": 1,
+        "rgb": 16732754
+      }
     }
   ],
   "collapse-display": false,
@@ -172,6 +179,6 @@
   "repelStrength": 15.7291666666667,
   "linkStrength": 1,
   "linkDistance": 356,
-  "scale": 0.3628873693012219,
+  "scale": 0.7132754626224624,
   "close": false
 }
