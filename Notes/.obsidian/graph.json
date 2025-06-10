@@ -5,7 +5,7 @@
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
-  "collapse-color-groups": false,
+  "collapse-color-groups": true,
   "colorGroups": [
     {
       "query": "path:C++",
@@ -172,13 +172,13 @@
   "collapse-display": false,
   "showArrow": true,
   "textFadeMultiplier": -2,
-  "nodeSizeMultiplier": 1.0953125,
-  "lineSizeMultiplier": 3.8515625,
+  "nodeSizeMultiplier": 1.52916666666667,
+  "lineSizeMultiplier": 3.41770833333333,
   "collapse-forces": false,
-  "centerStrength": 0.744791666666667,
-  "repelStrength": 15.7291666666667,
-  "linkStrength": 1,
-  "linkDistance": 356,
-  "scale": 0.36166328708988316,
+  "centerStrength": 0.416666666666667,
+  "repelStrength": 11.875,
+  "linkStrength": 0.838541666666667,
+  "linkDistance": 441,
+  "scale": 0.25796554841259045,
   "close": false
 }

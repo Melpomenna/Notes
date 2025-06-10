@@ -174,3 +174,278 @@ ______
  Данная концепция позволяет более эффективно выполнять программу, т.к. группы имеют общую локальность
 
 ______
+
+#Cpp 
+
+https://learn.microsoft.com/ru-ru/cpp/intrinsics/rdtsc?view=msvc-170
+
+\_\_rdtsc - Создает инструкцию, которая возвращает метку времени процессора. Метка времени процессора записывает количество циклов часов с момента последнего сброса.
+
+______
+
+#Cpp 
+
+Быстрый подсчет времени:
+
+```cpp
+
+class PerformanceClockCounter
+{
+
+public:
+
+[[nodiscard]] unsigned GetTickCount() const noexcept
+{
+	return __rdtsc();
+}
+
+[[nodiscard]] unsigned GetTickPerSec() const noexcept
+{
+	return tickPerSec_;
+}
+
+private:
+
+void RecalcTimePerSec() noexcept
+{
+	LARGE_INTEGER freq;
+	QueryPerformanceFrequency(&freq);
+	LARGE_INTEGER startQpc;
+	LARGE_INTEGER endQpc;
+
+	MemoryBarrier();
+	QueryPerformanceCounter(&startQpc);
+	const unsigned startTsc = __rdtsc();
+	MemoryBarrier();
+
+	do
+	{
+	  QueryPerformanceCounter(&endQpc);
+	} while((endQpc.QuadPart - startQpc.QuadPart) > freq.QuadPart / 32);
+
+	MemoryBarrier();
+	const unsigned endTsc = __rdtsc();
+	tickPerSec_ = ((endTsc - startTsc)*freq.QuadPart) / (endQpc.QuadPart - startQpc.QuadPart);
+}
+
+unsigned tickPerSec_{0};
+};
+
+```
+
+______
+
+#Cpp 
+
+Функция для именования потока
+
+```cpp
+
+void SetThreadName(DWORD dwThreadID, const char* threadName)
+{
+	const DWORD MS_VC_EXCEPTION = 0x406D1388;
+	#pragma pack(push, 8)
+		typedef struct tagTHREADNAME_INFO
+		{
+		  DWORD dwType;
+		  LPCSTR szName;
+		  DWORD dwThreadID;
+		  DWROD dwFlags;
+		} THREADNAME_INFO;
+	#pragma pack(pop)
+
+	THREADNAME_INFO info;
+	info.dwType = 0x1000; // must be 0x1000
+	info.szName = threadName;
+	info.dwThreadID = dwThreadID;
+	info.dwFlags = 0;
+	#pragma warning(push)
+	#pragma warning(disable: 6320, 6322)
+
+	__try
+	{
+		RaiseException(MS_VC_EXCEPTION, 0, sizeof(info)/sizeof(ULONG_PTR), (ULONG_PTR*)&info);
+	}
+	__except(EXCEPTION_EXCLUDE_HANDLER)
+	{
+	}
+	#pragma warning(pop)
+}
+```
+
+______
+
+Event Tracing for Windows (ETW) - механизм для трассирования и логирования событий произошедших в user-mode приложениях и kernel-mode драйверах.
+
+События собираемые через ETW:
+- Process Start/End
+- Thread Start/End
+- CSwitch / ReadyThread
+- Image Load/Unload
+- File Create/Destroy/Rename/Map/Unmap/Read/Write
+- Virtual Alloc/Free + Page Faults
+Пример (thx CppRussia & LestaGames):
+
+```cpp
+
+void ETWTraceCallback(PEVENT_RECORD recod)
+{
+
+// https://learn.microsoft.com/en-us/windows/win32/etw/cswitch
+struct CSwitch
+{
+	// ...
+};
+
+static constexpr UCHAR CONSTEXT_SWITCH_OPCODE = 36;
+
+if (record->EventHeader.EventDescriptor.OpCode != CONSTEXT_SWITCH_OPCODE) 
+	return;
+const CSwitch* cs = reinterpret_cast<const CSwitch*>(record->UserData);
+
+ContextSwitchReccord res;
+res.timeStamp = record->EventHeader.TimeStamp.QuadPart;
+res.newThreadID = cs->NewThreadId;
+res.oldThreadID = cs->OldThreadId;
+res.reason = cs->OldThreadWaitReason;
+res.processor = static_cast<UInt8>(record->BufferContext.ProcessorIndex);
+reinterpret_cast<ETWTracer*>(record->UserContext)->m_callback(res);
+
+}
+
+ETWTracer* CreateETWTracer(ETWEventCallback&& callback)
+{
+
+
+TracerInfo info = {};
+TracerInfo tmpInfo = info;
+ControlTrace(NULL, KERNEL_LOGGER_NAME, &tempInfo.base, EVENT_TRACE_CONTROL_STOP);
+
+TRACEHANDLE hTrace;
+ULONG nRes = StartTrace(&hTrace, KERNEL_LOGGER_NAME, &info.base);
+ETWTracer* tracer = new ETWTracer();
+
+EVENT_TRACE_LOGFILE traceLog = {};
+
+
+traceLog.EventRecordCallback = ETWTraceCallback;
+traceLog.Context = tracer;
+tracer->m_handle = OpenTrace(&traceLog);
+
+struct Internal
+{
+	static void TraceThreadEntryPoint(void* userData)
+	{
+		ETWTrace* tracer = reinterpret_cast<ETWTracer*>(userData);
+		ProcessTrace(&tracer->m_handle, 1, NULL, NULL);
+	}
+};
+
+tracer->m_thread.Start(&Internal::TraceThreadEntryPoint, tracer, "ETW Trace Thread");
+
+}
+
+```
+
+______
+
+#Cpp 
+
+Подменяем вызовы функций для Windows
+Немного теории:
+в каждом модуле есть таблиц импорта (список всех импортируемых модулей)
+Есть функция GetModuleHandle - она возвращает адрес начала где загружен блок (image модуля).
+Если посмотреть строение PE (Portable Executable) там есть NT headers, там есть Data Directories (все что есть в dll или exe) и там есть список функций, которые модуль берет за собой
+#TODO прочитать про PE и ImageLoader
+ImageLoader пропатчит и слинкует все
+
+Вот как можно заменить исходную функцию на свою:
+
+```cpp
+
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#include <DbgHelp.h>
+#include <iostream>
+
+#pragma comment(lib, "Dbghelp.lib")
+
+typedef LPVOID(WINAPI* PFN_VirtualAlloc)(
+    _In_opt_ LPVOID,
+    _In_ SIZE_T,
+    _In_ DWORD,
+    _In_ DWORD);
+
+static PFN_VirtualAlloc g_OriginalVirtualAlloc = nullptr;
+
+extern "C" LPVOID WINAPI OurVirtualAlloc(
+    _In_opt_ LPVOID lpAddress,
+    _In_ SIZE_T dwSize,
+    _In_ DWORD flAllocationType,
+    _In_ DWORD flProtect
+)
+{
+    std::cout << "Alloc " << dwSize << '\n';
+    return g_OriginalVirtualAlloc(lpAddress, dwSize, flAllocationType, flProtect);
+}
+
+void HookIAT(HMODULE module, const char* importModuleName, const char* functionName, void* newFunction, void** originalFunction)
+{
+    ULONG size = 0;
+    auto* importDesc = (PIMAGE_IMPORT_DESCRIPTOR)ImageDirectoryEntryToData(module, TRUE, IMAGE_DIRECTORY_ENTRY_IMPORT, &size);
+    if (!importDesc) return;
+
+    for (; importDesc->Name; ++importDesc)
+    {
+        const char* modName = (const char*)((PBYTE)module + importDesc->Name);
+        if (_stricmp(modName, importModuleName) != 0)
+            continue;
+
+        auto* thunk = (PIMAGE_THUNK_DATA)((PBYTE)module + importDesc->FirstThunk);
+        auto* origThunk = (PIMAGE_THUNK_DATA)((PBYTE)module + importDesc->OriginalFirstThunk);
+        for (; thunk->u1.Function; ++thunk, ++origThunk)
+        {
+            if (origThunk->u1.Ordinal & IMAGE_ORDINAL_FLAG)
+                continue;
+
+            auto* importByName = (PIMAGE_IMPORT_BY_NAME)((PBYTE)module + origThunk->u1.AddressOfData);
+            if (strcmp((char*)importByName->Name, functionName) == 0)
+            {
+                DWORD oldProtect;
+                VirtualProtect(&thunk->u1.Function, sizeof(void*), PAGE_READWRITE, &oldProtect);
+                if (originalFunction && !*originalFunction)
+                    *originalFunction = (void*)thunk->u1.Function;
+                thunk->u1.Function = (ULONGLONG)newFunction;
+                VirtualProtect(&thunk->u1.Function, sizeof(void*), oldProtect, &oldProtect);
+                return;
+            }
+        }
+    }
+}
+
+struct HookInitializer
+{
+    HookInitializer()
+    {
+        HMODULE exeModule = GetModuleHandle(nullptr);
+        g_OriginalVirtualAlloc = &VirtualAlloc;
+        HookIAT(exeModule, "KERNEL32.dll", "VirtualAlloc", (void*)&OurVirtualAlloc, (void**)&g_OriginalVirtualAlloc);
+    }
+};
+
+#pragma init_seg(lib)
+static HookInitializer g_HookInit;
+
+int main()
+{
+    VirtualAlloc(nullptr, 1000, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    return 0;
+}
+
+```
+
+
+_____
+
+Реализация Winapi в Wine (ориг см. в gitlab)
+https://github.com/wine-mirror/

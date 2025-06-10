@@ -45,3 +45,156 @@ ______
 #MSVC 
 
 Чтобы отключить отладку контейнеров можно в msvc установить `_HAS_ITERATOR_DEBUGGING` в 0, может увеличить производительность кода
+
+______
+#Windows 
+
+Подменяем методы vtable
+
+```cpp
+
+void** GetVtbl(void* instancePtr)
+{
+return *(void***)instancePtr;
+}
+
+void ChangeVtbl(void* instancePtr, void** newVtbl)
+{
+	*(void**)(instancePtr) = newVtbl;
+}
+
+template<class F>
+void ReplaceVtblEntry(void** vtblm SizeT index, F f)
+{
+	// memcpy
+	mem::Copy(&vtbl[index], &f, sizeof(void*));
+}
+
+SizeT GuessVtblSize(void** vtbl)
+{
+	for(SizeT i = 0; ; ++i)
+	{
+		MEMORY_BASIC_INFORMATION memInfo = {};
+		VirtualQuery(vtbl[i], &memInfo, sizeof(MEMORY_BASIC_INFORMATION));
+	
+		DWORD TestFlags = PAGE_EXECUTE | PAGE_EXECUTE_READ | PAGE_EXECUTE_READ_WRITE;
+		if (!(memInfo.Protect & TestFlags))
+			return i;
+	}
+}
+
+void Test()
+{
+	BaseClass* Instance = new TestClass();
+	void** OrigVtbl = GetVtbl(Instance);
+	SizeT VtblSize = GuessVtblSize(OrigVtbl);
+	void** NewVtbl = reinterpret_cast<void**>(mem::Malloc(VtblSize*sizeof(void*)));
+	mem::Copy(NewVtbl, OrigVtbl, VtblSize*sizeof(void*));
+
+	ReplaceVtblEntry(NewVtbl, 1, &TestClass::DoBaz);
+
+	ChangeVtbl(Instance, NewVtbl);
+	Instance->DoFoo(123);
+
+
+	ChangeVtbl(Instance, OrigVtbl);
+	mem::Free(NewVtbl);
+	delete Instance;
+}
+
+```
+
+______
+
+Для  методов класса можно ставить final:
+
+```cpp
+
+class Base
+{
+	virtual void foo();
+};
+
+class Derived :  Base
+{
+	void foo() override final;
+};
+
+```
+
+Данный прием помогает компилятору делать девиртуализацию во фронтенде (индерект вызов метода foo); 
+
+______
+
+#Windows 
+
+Получение call stack под Windows
+
+```cpp
+#include <dbghelp.h>
+
+#pragma comment(lib, "Dbghelp.lib")
+#pragma warning(disable: 4273)
+
+    void CStackTrace::InitSymbols()    
+    {
+        if (!m_bIsInited) 
+        {
+            m_bIsInited = SymInitialize(::GetCurrentProcess(), NULL, TRUE);       
+        }
+    }
+    
+    void CStackTrace::DestroySymbols()    
+    {
+        if (m_bIsInited)        
+        {
+            SymCleanup(::GetCurrentProcess());            
+            m_bIsInited = false;
+        }    
+    }
+    
+    std::string CStackTrace::GetStackTrace()
+    {        
+	    HANDLE hCurrentProcess = ::GetCurrentProcess();
+        if (!m_bIsInited)
+		    return "";
+        if (SymRefreshModuleList(hCurrentProcess) == FALSE)
+	        return "";
+	        
+        constexpr int nMaxFrames = 64;
+        void* pStackFrames[nMaxFrames];
+        memset(pStackFrames, 0, nMaxFrames);
+        int nFrames = 0;
+        
+        nFrames = RtlCaptureStackBackTrace(0, nMaxFrames, pStackFrames, nullptr);
+        SYMBOL_INFO* pSymbolInfo = (SYMBOL_INFO*)malloc(sizeof(SYMBOL_INFO) + 256 * sizeof(char));
+
+        if (pSymbolInfo == nullptr)        
+            return "";
+            
+        pSymbolInfo->SizeOfStruct = sizeof(*pSymbolInfo);        
+        pSymbolInfo->MaxNameLen = 512;
+        std::ostringstream oss;
+        
+        for (int i = 0; i < nFrames; ++i) {
+            oss << "Frame addr:" << pStackFrames[i] << " ";   
+                     
+            if (SymFromAddr(hCurrentProcess, (DWORD64)(pStackFrames[i]), nullptr, pSymbolInfo) == TRUE) {
+                DWORD displacement = 0;                
+                IMAGEHLP_LINE line;
+                line.SizeOfStruct = sizeof(IMAGEHLP_LINE);                
+                if (SymGetLineFromAddr(hCurrentProcess, (DWORD64)(pStackFrames[i]), &displacement, &line) == TRUE) {
+                    oss << "Frame " << i << ": " << pSymbolInfo->Name << " in "                        << line.FileName << " line " << line.LineNumber << "\n";
+                }                
+                else {
+                    oss << "Frame " << i << ": " << pSymbolInfo->Name << " (line info not available)\n";                
+                }
+            }            
+            else {
+                oss << "Frame " << i << ": (symbol not found)\n";            
+            }
+        }
+        free(pSymbolInfo);        
+        return oss.str();
+    }
+```
