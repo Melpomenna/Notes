@@ -449,3 +449,49 @@ _____
 
 Реализация Winapi в Wine (ориг см. в gitlab)
 https://github.com/wine-mirror/
+
+______
+
+Обзор от ИИ
+      
+ In the context of operating systems and synchronization, a mutant is a synchronization primitive, similar to a mutex, that allows exclusive access to a resource. It's a kernel object that can be in a signaled or non-signaled state, controlling access to a shared resource. When a thread wants to access the resource, it attempts to "acquire" the mutant. If the mutant is already acquired (non-signaled), the thread waits until it becomes available (signaled). 
+
+  
+       Here's a more detailed explanation:   
+  
+Exclusive Access: A
+ mutant is designed to ensure that only one thread can access a specific resource at a time, preventing race conditions and data corruption. 
+
+
+Signaled/Non-Signaled: 
+A mutant has a state that can be either signaled or non-signaled. When signaled, it indicates the resource is available. When non-signaled, it means the resource is currently in use. 
+
+
+Acquisition and Release: 
+Threads acquire (wait for) and release (signal) the mutant. When a thread acquires it, the mutant transitions to the non-signaled state,
+ and the thread gains exclusive access to the resource. When the thread is done, it releases the mutant, making it available again (signaled). 
+
+NtQueryMutant: 
+This is a Windows API function (ntdll.dll) that allows querying information about a mutant object. Specifically, it's used to retrieve basic information about the mutant, such as its 
+current state (signaled or non-signaled) and other attributes. The MUTANT_BASIC_INFORMATION structure is used to store the retrieved information. 
+
+Relationship to Mutex: 
+In many ways, a mutant is very similar to a mutex (mutual exclusion object). The key difference is that a mutant can be used to create a hierarchy of 
+synchronization objects in some operating systems, allowing for more complex synchronization scenarios. 
+
+NtCreateMutant: This is another Windows API function (also from ntdll.dll) used to create a mutant object, which is the first step in using it for synchronization.
+
+______
+
+Если вдруг появилась проблема в сети wifi: "Без подключения к интернету"
+Если ничего не помогло из интернетика, то через poweshell запущенный от имени администратора нужно ввести:
+```
+ipconfig /flushdns
+ipconfig /registerdns
+ipconfig /release
+ipconfig /renew
+netsh winsock reset catalog
+netsh int ip reset
+netsh ipv4 reset reset.log
+netsh ipv6 reset reset.log
+```
