@@ -1,1 +1,0 @@
-[IPR 03.04.2025 - 03.10.2025](https://mellpomenna.youtrack.cloud/issues?q=%23%7BUnresolved%7D%20has:%20%7BBoard%20Tasks%20Kanban%20Board%7D%20Stage:%20-%7BBacklog%7D,%20-%7BDevelop%7D,%20-%7BReview%7D,%20-%7BTest%7D,%20-%7BStaging%7D,%20-%7BDone%7D&preview=TAS-2)
