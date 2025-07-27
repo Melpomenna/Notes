@@ -135,14 +135,12 @@
             "id": "c9a0be91efff04ad",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "Общее/Полезные статьи, ссылки, курсы, лекции, новости.md",
-                "mode": "source",
-                "source": false
+                "file": "C++/Memory_Management_Algorithms_and_Implementations_in_C_C++_Blunden.pdf"
               },
-              "icon": "lucide-file",
-              "title": "Полезные статьи, ссылки, курсы, лекции, новости"
+              "icon": "lucide-file-text",
+              "title": "Memory_Management_Algorithms_and_Implementations_in_C_C++_Blunden"
             }
           }
         ],
@@ -293,10 +291,17 @@
       "command-palette:Открыть палитру команд": false
     }
   },
-  "active": "c9a0be91efff04ad",
+  "active": "c03832d53b0b5822",
   "lastOpenFiles": [
-    "Общее/План прочтения книг.md",
+    "Asembler/DDI0403E_e_armv7m_arm.pdf",
+    "C++/high-level-cpp-rcu_informatics_2017.pdf",
+    "Asembler/252046-sdm-change-document-1.pdf",
+    "Asembler/amd-epyc-7003-3d-vcache-pb-ansys-fluent.pdf",
+    "Asembler/Полезные статьи, ссылки, курсы, Assmebler.md",
+    "Asembler/rdtscpm1.pdf",
+    "C++/Memory_Management_Algorithms_and_Implementations_in_C_C++_Blunden.pdf",
     "Общее/Полезные статьи, ссылки, курсы, лекции, новости.md",
+    "Общее/План прочтения книг.md",
     "Общее/Книги.md",
     "Заметки по книгам/Рецензия на книгу Олимпиадное программирование 2-е издание, Антти Лааксонен.md",
     "Windows/База знаний, Windows.md",
@@ -319,8 +324,6 @@
     "Дневные заметки/2025-04-14.md",
     "Дневные заметки/2025-04-13.md",
     "Дневные заметки/2025-04-12.md",
-    "Дневные заметки/2025-04-10.md",
-    "Дневные заметки/2025-04-11.md",
     "miscs/Pasted image 20250615134945.png",
     "Pasted image 20250615134921.png",
     "miscs/Pasted image 20250615134851.png",
@@ -333,11 +336,6 @@
     "Asembler/ARM",
     "Резенции по видео-урокам",
     "Компиляторы/MSVC",
-    "Компиляторы",
-    "C++/Без названия",
-    "Asembler/x86-64",
-    "Asembler",
-    "GameDev",
-    "GPU"
+    "Компиляторы"
   ]
 }
