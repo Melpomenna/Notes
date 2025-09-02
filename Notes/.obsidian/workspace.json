@@ -137,14 +137,26 @@
             "state": {
               "type": "pdf",
               "state": {
-                "file": "C++/Memory_Management_Algorithms_and_Implementations_in_C_C++_Blunden.pdf"
+                "file": "Asembler/252046-sdm-change-document-1.pdf"
               },
               "icon": "lucide-file-text",
-              "title": "Memory_Management_Algorithms_and_Implementations_in_C_C++_Blunden"
+              "title": "252046-sdm-change-document-1"
+            }
+          },
+          {
+            "id": "e1984282796281ce",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.9.12"
+              },
+              "icon": "lucide-book-up",
+              "title": "примечания к выпуску 1.9.12"
             }
           }
         ],
-        "currentTab": 9
+        "currentTab": 10
       }
     ],
     "direction": "vertical"
@@ -201,7 +213,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 439.5
+    "width": 337.5
   },
   "right": {
     "id": "4a5f46ea416e5c4a",
@@ -283,6 +295,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:Создать новую базу": false,
       "switcher:Меню быстрого перехода": false,
       "graph:Граф": false,
       "canvas:Создать новый холст": false,
@@ -293,24 +306,29 @@
   },
   "active": "c03832d53b0b5822",
   "lastOpenFiles": [
+    "Windows/dinamicheski-zagruzhaemye-biblioteki-struktura-arhitektura-i-primenenie.pdf",
+    "Windows/dinamicheski-zagruzhaemye-biblioteki-struktura-arhitektura-i-primenenie-chast-3.pdf",
+    "Windows/dinamicheski-zagruzhaemye-biblioteki-struktura-arhitektura-i-primenenie-chast-2.pdf",
+    "C++/hpcc10.pdf",
+    "Asembler/1810.05600v2.pdf",
+    "Компиляторы/MSVC/База знаний, MSVC.md",
+    "Asembler/vtune-profiler_user-guide_2023.0-766319-766320.pdf",
+    "Asembler/rdtscpm1.pdf",
+    "Windows/База знаний, Windows.md",
+    "Windows/Новости, Windows.md",
+    "C++/Memory_Management_Algorithms_and_Implementations_in_C_C++_Blunden.pdf",
     "Asembler/DDI0403E_e_armv7m_arm.pdf",
     "C++/high-level-cpp-rcu_informatics_2017.pdf",
     "Asembler/252046-sdm-change-document-1.pdf",
-    "Asembler/amd-epyc-7003-3d-vcache-pb-ansys-fluent.pdf",
     "Asembler/Полезные статьи, ссылки, курсы, Assmebler.md",
-    "Asembler/rdtscpm1.pdf",
-    "C++/Memory_Management_Algorithms_and_Implementations_in_C_C++_Blunden.pdf",
     "Общее/Полезные статьи, ссылки, курсы, лекции, новости.md",
     "Общее/План прочтения книг.md",
     "Общее/Книги.md",
     "Заметки по книгам/Рецензия на книгу Олимпиадное программирование 2-е издание, Антти Лааксонен.md",
-    "Windows/База знаний, Windows.md",
     "Резенции по видео-урокам/Лекции по тулчейну, Константин Владимиров.md",
     "Резенции по видео-урокам/Магистерский курс по c++ от Константина Владимирова.md",
     "C++/База Знаний, C++.md",
-    "Компиляторы/MSVC/База знаний, MSVC.md",
     "Компиляторы/MSVC/База знаний, GCC Clang.md",
-    "Windows/Новости, Windows.md",
     "Дневные заметки/2025-04-25.md",
     "Дневные заметки/2025-04-24.md",
     "Дневные заметки/2025-04-23.md",
@@ -331,11 +349,6 @@
     "miscs/Pasted image 20250615133255.png",
     "miscs/Pasted image 20250610214347.png",
     "Без названия.canvas",
-    "miscs/graph.png",
-    "miscs",
-    "Asembler/ARM",
-    "Резенции по видео-урокам",
-    "Компиляторы/MSVC",
-    "Компиляторы"
+    "miscs/graph.png"
   ]
 }
