@@ -306,6 +306,7 @@
   },
   "active": "e1984282796281ce",
   "lastOpenFiles": [
+    "Asembler/x86-64-sysv-abi.pdf",
     "Компиляторы/advanced-compiler-design-and-implementation_compress.pdf",
     "Компиляторы/LinkersAndLoaders.pdf",
     "Windows/dinamicheski-zagruzhaemye-biblioteki-struktura-arhitektura-i-primenenie.pdf",
@@ -319,7 +320,6 @@
     "Windows/База знаний, Windows.md",
     "Windows/Новости, Windows.md",
     "C++/Memory_Management_Algorithms_and_Implementations_in_C_C++_Blunden.pdf",
-    "Asembler/DDI0403E_e_armv7m_arm.pdf",
     "Asembler/Полезные статьи, ссылки, курсы, Assmebler.md",
     "Общее/Полезные статьи, ссылки, курсы, лекции, новости.md",
     "Общее/План прочтения книг.md",
