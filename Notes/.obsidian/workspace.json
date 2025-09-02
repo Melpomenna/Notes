@@ -304,8 +304,10 @@
       "command-palette:Открыть палитру команд": false
     }
   },
-  "active": "c03832d53b0b5822",
+  "active": "e1984282796281ce",
   "lastOpenFiles": [
+    "Компиляторы/advanced-compiler-design-and-implementation_compress.pdf",
+    "Компиляторы/LinkersAndLoaders.pdf",
     "Windows/dinamicheski-zagruzhaemye-biblioteki-struktura-arhitektura-i-primenenie.pdf",
     "Windows/dinamicheski-zagruzhaemye-biblioteki-struktura-arhitektura-i-primenenie-chast-3.pdf",
     "Windows/dinamicheski-zagruzhaemye-biblioteki-struktura-arhitektura-i-primenenie-chast-2.pdf",
@@ -318,8 +320,6 @@
     "Windows/Новости, Windows.md",
     "C++/Memory_Management_Algorithms_and_Implementations_in_C_C++_Blunden.pdf",
     "Asembler/DDI0403E_e_armv7m_arm.pdf",
-    "C++/high-level-cpp-rcu_informatics_2017.pdf",
-    "Asembler/252046-sdm-change-document-1.pdf",
     "Asembler/Полезные статьи, ссылки, курсы, Assmebler.md",
     "Общее/Полезные статьи, ссылки, курсы, лекции, новости.md",
     "Общее/План прочтения книг.md",
